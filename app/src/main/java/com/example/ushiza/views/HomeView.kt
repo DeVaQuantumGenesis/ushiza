@@ -21,15 +21,19 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.example.ushiza.ui.theme.UshizaTheme
 
 
 class HoneViewActivity: ComponentActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Surface {
-                HomeAppBar()
-                FABExample()
+            UshizaTheme{
+                Surface (
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    HomeAppBar()
+                }
             }
         }
     }
@@ -56,8 +60,26 @@ fun HomeAppBar() {
                             contentDescription = "HumanIcons",
                         )
                     }
-                }
+                },
             )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                //タップ時のアクションを定義
+                onClick = {},
+                //FABのボタン自体の色を定義
+                containerColor = MaterialTheme.colorScheme.primary,
+                //Fabのコンテンツの色を定義
+                //ここではIconの色を定義
+                //onPrimaryにすることで視認性を確保
+                contentColor = MaterialTheme.colorScheme.onPrimary
+            ) {
+                //外観のアイコンを定義
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "追加"
+                )
+            }
         },
     ) {
         //innerPaddingにスクロール可能なビューなどを適用する場合はmodifier: Modifier = Modifierが必要
@@ -77,27 +99,4 @@ fun ScrollViewExample(modifier: Modifier = Modifier) {
         //スクロール可能なビューに配置したい内容
         Text(text = "This is the test app")
     }
-}
-
-//FAB(Floating Action Button)に関するコード
-@Composable
-fun FABExample() {
-   Scaffold(
-       floatingActionButton = {
-           FloatingActionButton(
-               //タップ時のアクションを定義
-               onClick = {}
-           ) {
-               //外観のアイコンを定義
-               Icon(
-                   imageVector = Icons.Default.Add,
-                   contentDescription = "追加"
-               )
-           }
-       }
-   ) {
-       //重ねるビューを定義
-       contentPadding ->
-       ScrollViewExample(modifier = Modifier.padding( paddingValues = contentPadding))
-   }
 }
